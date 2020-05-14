@@ -1,11 +1,11 @@
 library ieee;
 use ieee.std_logic_1164.all;
 
---Entidad para dividir la señal fundamental de reloj
+--Entity to get a fraction of the fundamental clock frequency
 
 entity div_gen is
 
-	generic( div 	 : integer:= 2);
+	generic( div 	      : integer:= 2);
 	port( 	clk_in, reset : in std_logic;
 				clk_out: out std_logic);
 			
