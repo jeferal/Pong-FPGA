@@ -36,25 +36,25 @@ end image_generator;
 
 architecture image_generator_arch of image_generator is
 
-	--Contadores de píxeles
+	--Pixel counters
 
 	signal row_counter : integer range 0 to Vc;
 	signal col_counter : integer range 0 to Hc;
 	
-	--Posición de las palas
+	--Paddle positions
 	
 	signal paddle1_pos_x	 : integer range 0 to Hc;
 	signal paddle2_pos_x	 : integer range 0 to Hc;
 	signal paddle1_pos_y	 : integer range 0 to Vc;
 	signal paddle2_pos_y	 : integer range 0 to Vc;
 	
-	--Posición y dirección de la bola
+	--Position and direction of the ball
 	
 	signal Ball_pos_x		 : integer range 0 to Hc;
 	signal Ball_pos_y		 : integer range 0 to Vc;
 	signal Ball_direction : integer range 0 to 5;
 	
-	--Estados del juego
+	--States of the game
 	type state_type is (S0, S1);
 	signal state: state_type;
 	signal move: std_logic;
@@ -62,7 +62,7 @@ architecture image_generator_arch of image_generator is
 	
 begin
 
-	--Contadores de píxeles para representar la imagen a partir de las señales horizontales y verticales-----------
+	--Pixel counters to represent the image-----------
 	
 	process(pixel_clk, Hactive, Vactive, Hsync, Vsync)
 	
@@ -106,7 +106,7 @@ begin
 		
 	end process;
 	
-	---Movimiento de las raquetas--------------------------------
+	---Paddle movements--------------------------------
 	
 	process(paddle_clk, reset, direction_switch)
 	
@@ -124,7 +124,7 @@ begin
 			paddle1_pos_x <= 50;
 			paddle2_pos_x <= 590;
 			
-			--Posición paddle 1
+			--Movement paddle 1
 			
 			if(direction_switch(0) = '1') then
 				if(paddle1_pos_y = Vc - Vb) then
@@ -140,7 +140,7 @@ begin
 				end if;
 			end if;
 			
-			--Posición paddle 2
+			--Movement paddle 2
 			
 			if(direction_switch(2) = '1') then
 				if(paddle2_pos_y = Vc - Vb) then
@@ -160,7 +160,7 @@ begin
 		
 	end process;
 	
-	---Posición y dirección de la bola -----------
+	---Position and direction of the ball-----------
 	
 	process(ball_clk, reset, Ball_direction, move)
 	
@@ -193,7 +193,7 @@ begin
 				when 5 => Ball_pos_x <= Ball_pos_x - 1;
 			end case;
 			
-			--Rebotes con los extremos de la pantalla
+			--Bounce with the board edges
 			if(Ball_pos_y = 0) then
 				
 				if(Ball_direction = 0) then
@@ -234,7 +234,7 @@ begin
 				end if;
 			end if;
 			
-			--Rebotes con las palas
+			--Bounces with the paddles
 			
 			if(Ball_pos_x + BallSize > paddle2_pos_x - PHsize) then
 					if(Ball_pos_y - BallSize <= paddle2_pos_y + PVsize and
@@ -293,7 +293,7 @@ begin
 		
 	end process;
 	
-	---Máquina de estados del juego-----------------
+	---State Machine of the game-----------------
 	process(pixel_clk, reset)
 	begin
 	
@@ -340,34 +340,34 @@ begin
 	end case;
 	end process;
 	
-	---Generador de imagen--------------------
+	---Image generator--------------------
 	
 	process(paddle1_pos_x, paddle1_pos_y, paddle2_pos_x, paddle2_pos_y, dena, row_counter, col_counter)
 	
 	begin
 		
-		--Señal que indica cuándo se debe mostrar por pantalla
+		--Signal that enables to display data on the screen
 		if(dena = '1') then
 		
-				 -- Detección paddle 1
+				 -- Paddle 1 detection
 			 if((paddle1_pos_x <= col_counter + PHsize) and
 				(paddle1_pos_x + PHsize >= col_counter) and
 				(paddle1_pos_y <= row_counter + PVsize) and
 				(paddle1_pos_y + PVsize >= row_counter)) or
 				
-				 -- Detección paddle 2
+				 -- Paddle 2 detection
 				((paddle2_pos_x <= col_counter + PHsize) and
 				(paddle2_pos_x + PHsize >= col_counter) and
 				(paddle2_pos_y <= row_counter + PVsize) and
 				(paddle2_pos_y + PVsize >= row_counter)) or
 				
-				 -- Deteccón bola
+				 -- Ball detection
 				((Ball_pos_x <= col_counter + BallSize) and
 				(Ball_pos_X + BallSize >= col_counter) and
 				(Ball_pos_y <= row_counter + BallSize) and
 				(Ball_pos_y + BallSize >= row_counter))	then
 				
-					--Color de los paddles y de la bola
+					-- Paddle and ball color
 					
 					R <= "1111";
 					G <= "1111";
@@ -375,7 +375,7 @@ begin
 				
 			else
 				
-					--Color del fondo
+					-- Background color
 			
 					R <= "0000";
 					G <= "0000";
@@ -385,7 +385,7 @@ begin
 			
 		else
 		
-			-- Si dena = 0, no se debe mostrar nada
+			-- If dena = 0, no color has to be displayed
 		
 			R <= (others => '0');
 			G <= (others => '0');
