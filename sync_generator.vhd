@@ -30,7 +30,7 @@ architecture sync_generator_arch of sync_generator is
 begin
 
 
-	-- Generador de señales horizontales
+	-- Horizontal signal generator
 	
 	process(pixel_clk, reset)
 		variable Hcount: integer range 0 to Hd;
@@ -58,7 +58,7 @@ begin
 		end if;
 	end process;
 	
-	-- Generador de señales verticales
+	-- Vertical signal generator
 	
 	process(Hsync, reset)
 		variable Vcount: integer range 0 to Vd;
@@ -83,7 +83,7 @@ begin
 		end if;
 	end process;
 	
-	-- Generador de señal enable para mostrar por pantalla
+	-- Dena generator (enables to diplay on the screen)
 	
 	dena <= Hactive and Vactive;
 	
