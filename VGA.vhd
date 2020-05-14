@@ -98,25 +98,25 @@ architecture VGA_arch of VGA is
 		BallSize: integer := 3);
 	
 	port(
-		pixel_clk 		  : in std_logic;
-		paddle_clk		  : in std_logic;
-		ball_clk			  : in std_logic;
-		reset				  : in std_logic;
-		Hactive, Vactive : in std_logic;
-		Hsync, Vsync     : in std_logic;
-		dena		 		  : in std_logic;
-		direction_switch : in std_logic_vector(3 downto 0);
-		start_game		  : in std_logic;
-		score1			  : out integer;
-		score2			  : out integer;
-		R,G,B				  : out std_logic_vector(3 downto 0));
+		pixel_clk		: in std_logic;
+		paddle_clk		: in std_logic;
+		ball_cl	     	        : in std_logic;
+		reset	     	        : in std_logic;
+		Hactive, Vactive 	: in std_logic;
+		Hsync, Vsync      	: in std_logic;
+		dena		 	: in std_logic;
+		direction_switch        : in std_logic_vector(3 downto 0);
+		start_game		: in std_logic;
+		score1			: out integer;
+		score2			: out integer;
+		R,G,B		        : out std_logic_vector(3 downto 0));
 		
 	end component image_generator;
 	
 	component score_display is
 		port(
-			score1 : in integer;
-			score2 : in integer;
+			score1   : in integer;
+			score2   : in integer;
 			seg1	 : out std_logic_vector(6 downto 0);
 			seg2	 : out std_logic_vector(6 downto 0);
 			bar	 : out std_logic);
@@ -125,25 +125,25 @@ architecture VGA_arch of VGA is
 	--Conexiones con las entradas y salidas
 	attribute chip_pin : string;
 	
-	attribute chip_pin of clk				:		signal is "N14";
-	attribute chip_pin of reset			:		signal is "F15";
+	attribute chip_pin of clk	       : signal is "N14";
+	attribute chip_pin of reset	       : signal is "F15";
 	
-	attribute chip_pin of direction_switch :  signal is "C10,C11,C12,A12";
-	attribute chip_pin of start_game			: signal is "B8";
+	attribute chip_pin of direction_switch : signal is "C10,C11,C12,A12";
+	attribute chip_pin of start_game       : signal is "B8";
 	
 	
-	attribute chip_pin of Hsync			:		signal is "N3";
-	attribute chip_pin of Vsync			:		signal is "n1";
+	attribute chip_pin of Hsync	       : signal is "N3";
+	attribute chip_pin of Vsync	       : signal is "n1";
 	
-	attribute chip_pin of R					:		signal is "AA1, V1, Y2, Y1";
-	attribute chip_pin of G					:		signal is "W1, T2, R2, R1";
-	attribute chip_pin of B					:		signal is "P1, T1, P4, N2";
+	attribute chip_pin of R		       : signal is "AA1, V1, Y2, Y1";
+	attribute chip_pin of G		       : signal is "W1, T2, R2, R1";
+	attribute chip_pin of B		       : signal is "P1, T1, P4, N2";
 	
-	attribute chip_pin of seg1				:		signal is "B22,C22,B21,A21,B19,A20,B20";
- 	attribute chip_pin of seg2				:		signal is "C17,D17,E16,C16,C15,E15,C14";
-	attribute chip_pin of bar				: 		signal is "B17";
+	attribute chip_pin of seg1	       : signal is "B22,C22,B21,A21,B19,A20,B20";
+ 	attribute chip_pin of seg2	       : signal is "C17,D17,E16,C16,C15,E15,C14";
+	attribute chip_pin of bar	       : signal is "B17";
 	
-	attribute chip_pin of ball_speed		: 		signal is "B14,A14";
+	attribute chip_pin of ball_speed       : signal is "B14,A14";
 			
 
 begin
@@ -165,12 +165,12 @@ begin
 						Vd => Vd)
 						
 		port map(pixel_clk => pixel_clk,
-					reset		 => reset,
-					Hsync		 => Hsync,
-					Vsync		 => Vsync,
-					Hactive	 => Hactive,
-					Vactive	 => Vactive,
-					dena 		 => dena);
+					reset	=> reset,
+					Hsync	=> Hsync,
+					Vsync	=> Vsync,
+					Hactive	=> Hactive,
+					Vactive	=> Vactive,
+					dena 	=> dena);
 					
 	u2: image_generator
 	
@@ -185,22 +185,22 @@ begin
 						PVsize => paddlesizeV,
 						PHsize => paddlesizeH)
 		
-		port map(pixel_clk		=> pixel_clk,
-					paddle_clk		=> paddle_clk,
-					ball_clk			=> ball_clk,
-					reset				=> reset,
-					Hactive			=> Hactive,
-					Vactive 			=> Vactive,
-					Hsync				=> Hsync,
-					Vsync				=> Vsync,
-					dena				=> dena,
-					direction_switch	=> direction_switch,
-					start_game			=> start_game,
-					score1				=> score1,
-					score2				=> score2,
-					R					=> R,
-					G					=> G,
-					B					=> B);
+		port map(		pixel_clk	=> pixel_clk,
+					paddle_clk	=> paddle_clk,
+					ball_clk	=> ball_clk,
+					reset		=> reset,
+					Hactive		=> Hactive,
+					Vactive 	=> Vactive,
+					Hsync		=> Hsync,
+					Vsync		=> Vsync,
+					dena		=> dena,
+					direction_switch=> direction_switch,
+					start_game	=> start_game,
+					score1		=> score1,
+					score2		=> score2,
+					R		=> R,
+					G		=> G,
+					B		=> B);
 					
 	u3: div_gen
 		generic map (div => div_paddle)
