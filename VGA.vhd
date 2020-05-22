@@ -122,7 +122,7 @@ architecture VGA_arch of VGA is
 			bar	 : out std_logic);
 	end component;
 	
-	--Conexiones con las entradas y salidas
+	--Pin assignments
 	attribute chip_pin : string;
 	
 	attribute chip_pin of clk	       : signal is "N14";
@@ -226,7 +226,7 @@ begin
 		port map		(score1 => score1, score2 => score2, seg1 => seg1, seg2 => seg2, bar => bar);
 		
 	
-	--Multiplexor para elegir la señal de reloj que corresponde con la velocidad de la bola
+	--Multiplexor to choose the speed of the ball
 	process(ball_speed)
 	begin
 		
