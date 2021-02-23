@@ -1,4 +1,4 @@
-#Pong game on an FPGA (DE10-Lite Board)
+#Pong game on an FPGA, DE10-Lite Board
 
 ##It display the match on a VGA monitor
 
