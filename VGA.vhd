@@ -100,7 +100,7 @@ architecture VGA_arch of VGA is
 	port(
 		pixel_clk		: in std_logic;
 		paddle_clk		: in std_logic;
-		ball_cl	     	        : in std_logic;
+		ball_clk     	        : in std_logic;
 		reset	     	        : in std_logic;
 		Hactive, Vactive 	: in std_logic;
 		Hsync, Vsync      	: in std_logic;
